@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crystal Mobile</title>
+    <style>
+        /* Общие стили */
+        * {
+            text-decoration: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0a0a1a;
+            color: #f0f0f0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Шапка и навигация */
+        header {
+            background: linear-gradient(to right, #0a0a1a, #1a1a3a, #0a0a1a);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            color: #4a9eff;
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.7);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover, 
+        nav ul li a.active {
+            background-color: #4a9eff;
+            color: #0a0a1a;
+        }
+        
+        /* Основной контент */
+        main {
+            min-height: calc(100vh - 160px);
+            padding: 40px 0;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            background: radial-gradient(circle at center, #1a1a3a, #0a0a1a);
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+        
+        .hero h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #4a9eff;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #4a9eff;
+            color: #0a0a1a;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background-color: #6ab1ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 158, 255, 0.4);
+        }
+        
+        /* Секции */
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #4a9eff;
+            border-bottom: 2px solid #4a9eff;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .feature-card {
+            background: rgba(26, 26, 58, 0.7);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #4a9eff;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #6ab1ff;
+        }
+        
+        /* Галерея */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            height: 200px;
+            position: relative;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Страница загрузки */
+        .download-section {
+            text-align: center;
+            padding: 40px;
+            background: rgba(26, 26, 58, 0.7);
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .download-info {
+            margin-bottom: 30px;
+        }
+        
+        .download-info p {
+            margin-bottom: 15px;
+        }
+        
+        .requirements {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            background: rgba(10, 10, 26, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .requirements ul {
+            list-style-position: inside;
+            margin-left: 20px;
+        }
+        
+        .requirements li {
+            margin-bottom: 10px;
+        }
+        
+        /* Форма обратной связи */
+        .contact-form {
+            max-width: 600px;
+            margin: 30px auto 0;
+            background: rgba(26, 26, 58, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(10, 10, 26, 0.7);
+            border: 1px solid #4a9eff;
+            border-radius: 5px;
+            color: #f0f0f0;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Подвал */
+        footer {
+            background: #0a0a1a;
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid #1a1a3a;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-links {
+            display: flex;
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #1a1a3a;
+            border-radius: 50%;
+            margin: 0 10px;
+            color: #4a9eff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: #4a9eff;
+            color: #0a0a1a;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            color: #6ab1ff;
+            font-size: 14px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px;
+            }
+            
+            .hero h2 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка с навигацией -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Crystal Mobile</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home" class="nav-link active" data-page="home">Главная</a></li>
+                        <li><a href="#about" class="nav-link" data-page="about">О проекте</a></li>
+                        <li><a href="#gallery" class="nav-link" data-page="gallery">Галерея</a></li>
+                        <li><a href="#download" class="nav-link" data-page="download">Скачать</a></li>
+                        <li><a href="#contacts" class="nav-link" data-page="contacts">Техническая поддержка</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <div class="container">
+            <!-- Главная страница -->
+            <section id="home-page" class="page active">
+                <div class="hero">
+                    <h2>Добро пожаловать в Crystal Mobile!</h2>
+                    <p>Окунитесь в захватывающий мир ролевой игры, где каждый может стать тем, кем захочет. Создавайте своего персонажа, исследуйте огромный открытый мир, заводите друзей и врагов, и станьте легендой Crystal Mobile!</p>
+                    <a href="#download" class="btn nav-link" data-page="download">Скачать сейчас</a>
+                </div>
+                
+                <div class="section">
+                    <h3>Особенности проекта</h3>
+                    <div class="features">
+                        <div class="feature-card">
+                            <h4>Открытый мир</h4>
+                            <p>Исследуйте огромный город с множеством локаций, от деловых районов до трущоб и промышленных зон.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Реалистичная ролевая игра</h4>
+                            <p>Создавайте уникальных персонажей и проживайте их жизни с полным погружением в игровой мир.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Разнообразные профессии</h4>
+                            <p>Выберите свой путь: станьте полицейским, медиком, бизнесменом или преступником - решать вам!</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Мультиплеер</h4>
+                            <p>Играйте вместе с тысячами других игроков, создавайте семьи, банды и влияйте на мир вокруг.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- О проекте -->
+            <section id="about-page" class="page">
+                <div class="section">
+                    <h3>О проекте Crystal Mobile</h3>
+                    <p>Crystal Mobile - это масштабный ролевой проект для мобильных устройств, созданный на основе знаменитой серии игр Grand Theft Auto. Наш проект предлагает уникальный опыт ролевой игры в открытом мире с глубокой системой персонажей и социальным взаимодействием.</p>
+                    
+                    <p>Проект разрабатывается с 2025 года и постоянно обновляется, добавляя новый контент и улучшая игровой процесс. Наша команда стремится создать максимально immersive среду, где каждый игрок может найти себе занятие по душе.</p>
+                    
+                    <div class="features">
+                        <div class="feature-card">
+                            <h4>Наша миссия</h4>
+                            <p>Создать лучшую мобильную ролевую игру с открытым миром, где игроки могут реализовать свои фантазии и творческие идеи.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Развитие проекта</h4>
+                            <p>Мы постоянно работаем над улучшением игры, добавляя новые функции, исправляя ошибки и прислушиваясь к мнению сообщества.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Галерея -->
+            <section id="gallery-page" class="page">
+                <div class="section">
+                    <h3>Галерея Crystal Mobile</h3>
+                    <p>Посмотрите скриншоты из игры, чтобы получить представление о геймплее и визуальной составляющей проекта.</p>
+                    
+                    <!--<div class="gallery">
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x200/1a1a3a/4a9eff?text=Game+Screenshot+1" alt="Скриншот игры 1">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x200/1a1a3a/4a9eff?text=Game+Screenshot+2" alt="Скриншот игры 2">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x200/1a1a3a/4a9eff?text=Game+Screenshot+3" alt="Скриншот игры 3">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x200/1a1a3a/4a9eff?text=Game+Screenshot+4" alt="Скриншот игры 4">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x200/1a1a3a/4a9eff?text=Game+Screenshot+5" alt="Скриншот игры 5">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x200/1a1a3a/4a9eff?text=Game+Screenshot+6" alt="Скриншот игры 6">
+                        </div>
+                    </div>-->
+                </div>
+            </section>
+
+            <!-- Скачать -->
+            <section id="download-page" class="page">
+                <div class="section">
+                    <h3>Скачать Crystal Mobile</h3>
+                    <p>Присоединяйтесь к нашему сообществу! Скачайте приложение и начните свое приключение в мире Crystal Mobile.</p>
+                    
+                    <div class="download-section">
+                        <div class="download-info">
+                            <p>Версия: -</p>
+                            <p>Размер: - МБ</p>
+                            <p>Последнее обновление: -</p>
+                        </div>
+                        
+                        <div class="requirements">
+                            <h4>Системные требования:</h4>
+                            <ul>
+                                <li>Android - или выше</li>
+                                <li>- ГБ оперативной памяти</li>
+                                <li>- МБ свободного места</li>
+                                <li>Стабильное интернет-соединение</li>
+                            </ul>
+                        </div>
+                        
+                        <a href="#" class="btn" id="download-btn">Скачать APK (- МБ)</a>
+                        <p style="margin-top: 15px; font-size: 14px;">Нажимая кнопку, вы соглашаетесь с <a href="lincense.html" style="color: #4a9eff;">лицензионным соглашением</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Контакты -->
+            <section id="contacts-page" class="page">
+                <div class="section">
+                    <h3>Техническая поддержка</h3>
+                    <p>Если у вас есть вопросы, предложения или вы хотите сообщить об ошибке, свяжитесь с нами через социальные сети.</p>
+                    
+                    <div class="contact-form">
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="name">Телеграм бот, Технической поддержки: <a href="https:/t.me/CrystalMobile_Technical_bot" title="Telegram"><i>Телеграм</i></a></label>
+                            <div class="form-group">
+                                <label for="name">Дискорд бот, Технической поддержки: <a href="#" title="Discord"><i>-</i></a></label>
+                            <!-- <div class="form-group">
+                                <label for="name">Телеграмм бот Технической поддержки: <a href="#" title="Telegram"><i>Телеграмм</i></a></label>
+                            <div class="form-group">
+                                <label for="name">Телеграмм бот Технической поддержки: <a href="#" title="Telegram"><i>Телеграмм</i></a></label> -->
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <h1>Crystal Mobile</h1>
+                </div>
+                
+                <div class="social-links">
+                    <!-- <a href="#" title="VK"><i>ВК</i></a>-->
+                    <!-- <a href="#" title="Telegram"><i>ТГ</i></a>-->
+                    <a href="https://discord.gg/UAzApc9z" title="Discord"><i>DS</i></a>
+                    <!-- <a href="#" title="YouTube"><i>ЮТ</i></a>-->
+                </div>
+                
+                <div class="copyright">
+                    <p>&copy;  2025 crystal.ww. Все права защищены.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Навигация между страницами
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Убираем активный класс у всех ссылок и страниц
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    pages.forEach(page => page.classList.remove('active'));
+                    
+                    // Добавляем активный класс текущей ссылке
+                    this.classList.add('active');
+                    
+                    // Показываем соответствующую страницу
+                    const pageId = this.getAttribute('data-page');
+                    document.getElementById(`${pageId}-page`).classList.add('active');
+                });
+            });
+            
+            
+            
+            // Обработка кнопки скачивания
+            const downloadBtn = document.getElementById('download-btn');
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Начинается загрузка файла  CrystalMobile.apk (150 МБ). Пожалуйста, подождите...');
+                    // В реальном проекте здесь будет ссылка на файл
+                    window.location.href = 'downloads/CrystalMobile.apk'
+                });
+            }
+        });
+    </script>
+</body>
+</html>
